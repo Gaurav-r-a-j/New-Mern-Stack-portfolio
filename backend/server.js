@@ -16,4 +16,4 @@ cloudinary.v2.config({
 app.listen(process.env.PORT , () =>{
     console.log(`Sever is running on port: ${process.env.PORT}`);
     
-})
+});

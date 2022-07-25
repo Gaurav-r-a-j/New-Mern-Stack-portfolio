@@ -79,7 +79,7 @@ export const getUser = async (req, res) => {
         return res.status(400).json({
             success: false,
             message: error.message,
-        })
+        });
     }
 }
 
@@ -126,7 +126,7 @@ export const contact = async (req, res) => {
         return res.status(400).json({
             success: false,
             message: error.message,
-        })
+        });
     }
 }
 
@@ -153,7 +153,7 @@ export const updateUser = async (req, res) => {
   
       if (skills) {
         if (skills.image1) {
-          await cloudinary.v2.uploader.destroy(user.skills.image1.public_id);
+          // await cloudinary.v2.uploader.destroy(user.skills.image1.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image1, {
             folder: "portfolio",
           });
@@ -165,7 +165,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image2) {
-          await cloudinary.v2.uploader.destroy(user.skills.image2.public_id);
+          // await cloudinary.v2.uploader.destroy(user.skills.image2.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image2, {
             folder: "portfolio",
           });
@@ -177,7 +177,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image3) {
-          await cloudinary.v2.uploader.destroy(user.skills.image3.public_id);
+          // await cloudinary.v2.uploader.destroy(user.skills.image3.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image3, {
             folder: "portfolio",
           });
@@ -189,7 +189,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image4) {
-          await cloudinary.v2.uploader.destroy(user.skills.image4.public_id);
+          // await cloudinary.v2.uploader.destroy(user.skills.image4.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image4, {
             folder: "portfolio",
           });
@@ -201,7 +201,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image5) {
-          await cloudinary.v2.uploader.destroy(user.skills.image5.public_id);
+          // await cloudinary.v2.uploader.destroy(user.skills.image5.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image5, {
             folder: "portfolio",
           });
@@ -213,7 +213,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image6) {
-          await cloudinary.v2.uploader.destroy(user.skills.image6.public_id);
+          // await cloudinary.v2.uploader.destroy(user.skills.image6.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image6, {
             folder: "portfolio",
           });
@@ -244,7 +244,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (about.avatar) {
-          await cloudinary.v2.uploader.destroy(user.about.avatar.public_id);
+          // await cloudinary.v2.uploader.destroy(user.about.avatar.public_id);
   
           const myCloud = await cloudinary.v2.uploader.upload(about.avatar, {
             folder: "portfolio",
@@ -323,7 +323,7 @@ export const addYoutube = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "Added To Youtube"
+            message: "Added To Youtube videos"
         })
 
     } catch (error) {
@@ -397,7 +397,7 @@ export const deleteTimeline = async (req, res) => {
             message: error.message,
         });
     }
-}
+};
 
 
 //controller to delete from Youtube
@@ -417,8 +417,8 @@ export const deleteYoutube = async (req, res) => {
         await user.save();
         res.status(200).json({
             success: true,
-            message: "Deleted from Youtube"
-        })
+            message: "Deleted from Youtube",
+        });
 
     } catch (error) {
         return res.status(400).json({
@@ -426,7 +426,7 @@ export const deleteYoutube = async (req, res) => {
             message: error.message,
         });
     }
-}
+};
 
 
 export const deleteProject = async (req, res) => {
@@ -452,6 +452,6 @@ export const deleteProject = async (req, res) => {
         return res.status(400).json({
             success: false,
             message: error.message,
-        })
+        });
     }
-}
+};
