@@ -103,32 +103,30 @@ export const myProfile = async (req, res) => {
             message: error.message,
         })
     }
-}
+};
 
 
 //controller for contact
 
 export const contact = async (req, res) => {
-    try {
+  try {
+    const { name, email, message } = req.body;
 
-        const { name, email, message } = req.body;
+    const userMessage = `Hey, I am ${name}. My email is ${email}. My message is ${message}.`;
 
-        const userMessage = `Hey I am ${name}. My email is ${email}. My message is ${message}.`;
+    await sendMail(userMessage);
 
-        await sendMail(userMessage);
-        return res.status(200).json({
-            success: true,
-            message: "Message Sent Successfully"
-
-        })
-
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: error.message,
-        });
-    }
-}
+    return res.status(200).json({
+      success: true,
+      message: "Message Sent Successfully",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 
 
@@ -153,7 +151,7 @@ export const updateUser = async (req, res) => {
   
       if (skills) {
         if (skills.image1) {
-          // await cloudinary.v2.uploader.destroy(user.skills.image1.public_id);
+          await cloudinary.v2.uploader.destroy(user.skills.image1.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image1, {
             folder: "portfolio",
           });
@@ -165,7 +163,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image2) {
-          // await cloudinary.v2.uploader.destroy(user.skills.image2.public_id);
+          await cloudinary.v2.uploader.destroy(user.skills.image2.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image2, {
             folder: "portfolio",
           });
@@ -177,7 +175,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image3) {
-          // await cloudinary.v2.uploader.destroy(user.skills.image3.public_id);
+          await cloudinary.v2.uploader.destroy(user.skills.image3.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image3, {
             folder: "portfolio",
           });
@@ -189,7 +187,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image4) {
-          // await cloudinary.v2.uploader.destroy(user.skills.image4.public_id);
+          await cloudinary.v2.uploader.destroy(user.skills.image4.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image4, {
             folder: "portfolio",
           });
@@ -201,7 +199,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image5) {
-          // await cloudinary.v2.uploader.destroy(user.skills.image5.public_id);
+          await cloudinary.v2.uploader.destroy(user.skills.image5.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image5, {
             folder: "portfolio",
           });
@@ -213,7 +211,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (skills.image6) {
-          // await cloudinary.v2.uploader.destroy(user.skills.image6.public_id);
+          await cloudinary.v2.uploader.destroy(user.skills.image6.public_id);
           const myCloud = await cloudinary.v2.uploader.upload(skills.image6, {
             folder: "portfolio",
           });
@@ -244,7 +242,7 @@ export const updateUser = async (req, res) => {
         }
   
         if (about.avatar) {
-          // await cloudinary.v2.uploader.destroy(user.about.avatar.public_id);
+          await cloudinary.v2.uploader.destroy(user.about.avatar.public_id);
   
           const myCloud = await cloudinary.v2.uploader.upload(about.avatar, {
             folder: "portfolio",
@@ -271,32 +269,31 @@ export const updateUser = async (req, res) => {
     }
   };
 
-export const addTimeline = async (req, res) => {
+  export const addTimeline = async (req, res) => {
     try {
-        const { title, description, date } = req.body;
-
-        const user = await User.findById(req.user._id);
-
-        user.timeline.unshift({
-            title,
-            description,
-            date,
-        })
-
-        await user.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Added To Timeline"
-        })
-
+      const { title, description, date } = req.body;
+  
+      const user = await User.findById(req.user._id);
+  
+      user.timeline.unshift({
+        title,
+        description,
+        date,
+      });
+  
+      await user.save();
+  
+      res.status(200).json({
+        success: true,
+        message: "Added To Timline",
+      });
     } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: error.message,
-        });
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
     }
-}
+  };
 
 
 //controller for youtube
@@ -383,7 +380,7 @@ export const deleteTimeline = async (req, res) => {
 
         const user = await User.findById(req.user._id);
 
-        user.timeline = user.timeline.filter((item) => item._id !== id);
+        user.timeline = user.timeline.filter((item) => item._id != id);
 
         await user.save();
         res.status(200).json({
@@ -408,11 +405,11 @@ export const deleteYoutube = async (req, res) => {
 
         const user = await User.findById(req.user._id);
 
-        const video = user.youtube.filter((video) => video._id === id);
+        const video = user.youtube.find((video) => video._id == id);
 
         await cloudinary.v2.uploader.destroy(video.image.public_id)
 
-        user.youtube = user.youtube.filter((video) => video._id !== id);
+        user.youtube = user.youtube.filter((video) => video._id != id);
 
         await user.save();
         res.status(200).json({
@@ -434,12 +431,12 @@ export const deleteProject = async (req, res) => {
         const { id } = req.params;
         const user = await User.findById(req.user._id);
 
-        const project = user.projects.filter((item) => item._id === id);
+        const project = user.projects.find((item) => item._id == id);
 
         await cloudinary.v2.uploader.destroy(project.image.public_id);
 
 
-        user.projects = user.projects.filter((item) => item._id !== id);
+        user.projects = user.projects.filter((item) => item._id != id);
 
         await user.save();
 
